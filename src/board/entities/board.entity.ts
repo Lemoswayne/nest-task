@@ -29,7 +29,7 @@ export class Board {
   updatedAt: Date;
 
   // Relacionamento com User
-  @ManyToOne(() => User, (user) => user.boards)
+  @ManyToOne(() => User, (user) => user.boards, { onDelete: 'CASCADE' })
   user: User;
 
   // Relacionamento com Task

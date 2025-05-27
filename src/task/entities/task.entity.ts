@@ -42,8 +42,6 @@ export class Task {
   updatedAt: Date;
 
   // Relacionamento com Board
-  @ManyToOne(() => Board, (board) => board.tasks, {
-    onDelete: 'CASCADE',
-  })
+  @ManyToOne(() => Board, (board) => board.tasks, { onDelete: 'CASCADE' })
   board: Board;
 }
