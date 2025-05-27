@@ -1,98 +1,157 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 📝 Nest Task API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API desenvolvida com **NestJS**, utilizando **TypeORM**, **PostgreSQL** e boas práticas de arquitetura para gerenciamento de usuários (**Users**), quadros (**Boards**) e tarefas (**Tasks**), incluindo paginação, filtros e autenticação.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 🚀 Tecnologias Utilizadas
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- [NestJS](https://nestjs.com/) • Framework Node.js com TypeScript
+- [TypeORM](https://typeorm.io/) • ORM para integração com banco de dados
+- [PostgreSQL](https://www.postgresql.org/) • Banco de dados relacional
+- [Swagger](https://swagger.io/) • Documentação de API automática
+- [Class Validator](https://github.com/typestack/class-validator) • Validações nas rotas
+- [Jest](https://jestjs.io/) • Testes unitários
 
-## Project setup
+---
+
+## 📦 Instalação
 
 ```bash
-$ npm install
+# Clone o repositório
+git clone https://github.com/seu-usuario/nest-task.git
+
+# Acesse a pasta
+cd nest-task
+
+# Instale as dependências
+npm install
 ```
 
-## Compile and run the project
+---
+
+## ⚙️ Configuração
+
+Crie um arquivo `.env` na raiz do projeto com as configurações do banco de dados:
+
+```env
+DATABASE_URL=postgres://usuario:senha@localhost:5432/nesttask
+JWT_SECRET=sua_chave_secreta
+JWT_EXPIRES_IN=1d
+```
+
+---
+
+## 🐘 Configuração do Banco de Dados
+
+Se desejar usar Docker para PostgreSQL:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+docker run --name postgres-nest -e POSTGRES_PASSWORD=123456 -e POSTGRES_DB=nesttask -p 5432:5432 -d postgres
 ```
 
-## Run tests
+---
+
+## 🔥 Rodando o Projeto
 
 ```bash
-# unit tests
-$ npm run test
+# Desenvolvimento
+npm run start:dev
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Produção
+npm run build
+npm run start:prod
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## 🧪 Rodando Testes
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run test
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+## 🔗 Documentação Swagger
 
-Check out a few resources that may come in handy when working with NestJS:
+Após rodar o projeto, acesse:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```
+http://localhost:3000/api
+```
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 📜 Endpoints Principais
 
-## Stay in touch
+### 🧑‍💼 Users
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- `POST /users` — Criar um usuário
+- `GET /users` — Listar todos os usuários
+- `GET /users/:id` — Buscar um usuário
+- `PATCH /users/:id` — Atualizar um usuário
+- `DELETE /users/:id` — Deletar um usuário (deleta também boards e tasks relacionados)
 
-## License
+### 🗂️ Boards
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- `POST /boards` — Criar um board
+- `GET /boards` — Listar todos os boards
+- `GET /boards/:id` — Buscar um board específico
+- `PATCH /boards/:id` — Atualizar um board
+- `DELETE /boards/:id` — Deletar um board (deleta também tasks relacionadas)
+
+### ✅ Tasks
+
+- `POST /tasks` — Criar uma task
+- `GET /tasks?boardId=uuid&page=1&limit=10` — Listar tasks com paginação
+- `GET /tasks/:id` — Buscar uma task específica
+- `PATCH /tasks/:id` — Atualizar uma task
+- `DELETE /tasks/:id` — Deletar uma task
+
+---
+
+## 📂 Estrutura de Pastas
+
+```
+src
+├── app.module.ts
+├── common        # DTOs, filtros, interceptors, pipes
+├── board         # Módulo de boards
+├── task          # Módulo de tasks
+└── user          # Módulo de usuários
+```
+
+---
+
+## ✅ Funcionalidades
+
+- ✅ CRUD completo de User
+- ✅ CRUD completo de Boards
+- ✅ CRUD completo de Tasks
+- ✅ Relacionamento entre Users → Boards → Tasks
+- ✅ Delete em cascata (quando deleta um usuário, apaga seus boards e tasks)
+- ✅ Validação de dados com class-validator
+- 🚧 Paginação em Tasks
+- 🚧 Documentação Swagger
+- ✅ Suporte a UUID
+- 🚧 Autenticação e autorização com JWT
+
+---
+
+## 💡 Melhorias Futuras
+
+- [ ] Implementar autenticação e autorização
+- [ ] Adicionar filtros avançados (status, prioridade, etc.)
+- [ ] Implementar os testes unitários e e2e
+- [ ] CI/CD com GitHub Actions
+- [ ] Deploy
+
+---
+
+## 🧑‍💻 Autor
+
+Desenvolvido por **Lemoswayne** 🚀
+
+- GitHub: [@Lemoswayne](https://github.com/Lemoswayne)
+- LinkedIn: [joaopedroxavierlemos](https://linkedin.com/in/joaopedroxavierlemos)
