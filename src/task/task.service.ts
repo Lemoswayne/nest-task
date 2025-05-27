@@ -18,7 +18,7 @@ export class TaskService {
 
   async create(createTaskDto: CreateTaskDto) {
     const board = await this.boardRepository.findOne({
-      where: { id: createTaskDto.boardID },
+      where: { id: createTaskDto.boardId },
     });
 
     if (!board) {

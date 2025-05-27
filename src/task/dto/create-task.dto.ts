@@ -16,7 +16,7 @@ export class CreateTaskDto {
 
   @IsString()
   @IsNotEmpty()
-  boardID: string;
+  boardId: string;
 
   @IsString()
   @IsOptional()

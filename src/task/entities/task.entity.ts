@@ -18,7 +18,7 @@ export class Task {
   title: string;
 
   @Column()
-  boardID: string;
+  boardId: string;
 
   @Column({ nullable: true })
   description: string;
