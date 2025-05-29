@@ -4,13 +4,16 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
+  UsePipes,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 
 @Controller('users')
+@UsePipes(ParseUUIDPipe)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

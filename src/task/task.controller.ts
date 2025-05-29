@@ -4,13 +4,16 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
+  UsePipes,
 } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskService } from './task.service';
 
 @Controller('tasks')
+@UsePipes(ParseUUIDPipe)
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 

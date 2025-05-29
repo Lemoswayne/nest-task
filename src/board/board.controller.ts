@@ -4,13 +4,16 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
+  UsePipes,
 } from '@nestjs/common';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { BoardService } from './board.service';
 
 @Controller('boards')
+@UsePipes(ParseUUIDPipe)
 export class BoardController {
   constructor(private readonly boardService: BoardService) {}
 
