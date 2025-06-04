@@ -5,32 +5,27 @@ import { UserModule } from 'src/user/user.module';
 import { BoardModule } from 'src/board/board.module';
 import { TaskModule } from 'src/task/task.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
-import * as Joi from '@hapi/joi';
+import { ConfigModule, ConfigType } from '@nestjs/config';
+import appConfig from './app.config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      // Evitar que esqueça de definir as variáveis de ambiente em produção
-      validationSchema: Joi.object({
-        DATABASE_TYPE: Joi.string().valid('postgres').required(),
-        DATABASE_HOST: Joi.string().required(),
-        DATABASE_PORT: Joi.number().default(5432),
-        DATABASE_USERNAME: Joi.string().required(),
-        DATABASE_DATABASE: Joi.string().required(),
-        DATABASE_AUTOLOADENTITIES: Joi.number().default(1).valid(0, 1),
-        DATABASE_SYNCHRONIZE: Joi.number().default(1).valid(0, 1),
+    ConfigModule.forRoot(),
+    ConfigModule.forFeature(appConfig),
+
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule.forFeature(appConfig)],
+      inject: [appConfig.KEY],
+      useFactory: (appConfigurations: ConfigType<typeof appConfig>) => ({
+        type: appConfigurations.database.type,
+        host: appConfigurations.database.host,
+        port: appConfigurations.database.port || 5432,
+        username: appConfigurations.database.username,
+        database: appConfigurations.database.database,
+        password: appConfigurations.database.password,
+        autoLoadEntities: Boolean(appConfigurations.database.autoLoadEntities),
+        synchronize: Boolean(appConfigurations.database.synchronize), // Desligar em produção
       }),
-    }),
-    TypeOrmModule.forRoot({
-      type: process.env.DATABASE_TYPE as 'postgres',
-      host: process.env.DATABASE_HOST,
-      port: +(process.env.DATABASE_PORT || 5432),
-      username: process.env.DATABASE_USERNAME,
-      database: process.env.DATABASE_DATABASE,
-      password: process.env.DATABASE_PASSWORD,
-      autoLoadEntities: Boolean(process.env.DATABASE_AUTOLOADENTITIES),
-      synchronize: Boolean(process.env.DATABASE_SYNCHRONIZE), // Desligar em produção
     }),
     UserModule,
     BoardModule,

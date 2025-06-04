@@ -13,7 +13,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 
 @Controller('users')
-@UsePipes(ParseUUIDPipe)
+@UsePipes(ParseUUIDPipe) // -> Está aplicando para todos!!
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
