@@ -7,13 +7,12 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
-  UsePipes,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 
 @Controller('users')
-@UsePipes(ParseUUIDPipe) // -> Está aplicando para todos!!
+// @UsePipes(ParseUUIDPipe) // -> Está aplicando para todos!!
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -28,17 +27,20 @@ export class UserController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.findOne(id);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.remove(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: CreateUserDto) {
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateUserDto: CreateUserDto,
+  ) {
     return this.userService.update(id, updateUserDto);
   }
 }

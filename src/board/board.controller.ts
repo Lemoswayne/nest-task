@@ -7,13 +7,12 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
-  UsePipes,
 } from '@nestjs/common';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { BoardService } from './board.service';
 
 @Controller('boards')
-@UsePipes(ParseUUIDPipe)
+// @UsePipes(ParseUUIDPipe)
 export class BoardController {
   constructor(private readonly boardService: BoardService) {}
 
@@ -28,17 +27,20 @@ export class BoardController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.boardService.findOne(id);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.boardService.remove(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBoardDto: CreateBoardDto) {
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateBoardDto: CreateBoardDto,
+  ) {
     return this.boardService.update(id, updateBoardDto);
   }
 }
