@@ -6,3 +6,13 @@ GET {{BaseUrl}}/users
 GET {{BaseUrl}}/tasks
 ###
 GET {{BaseUrl}}/boards
+
+# AUTH
+### Lista todas as pessoas
+POST {{BaseUrl}}/auth/
+Content-Type: application/json
+
+{
+    "email": "",
+    "password": ""
+}

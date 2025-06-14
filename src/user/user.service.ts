@@ -1,10 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { HashingService } from 'src/auth/hashing/hashing.service';
+import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
 
 @Injectable()
 export class UserService {
@@ -30,17 +35,32 @@ export class UserService {
     return user;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+  async update(
+    id: string,
+    updateUserDto: UpdateUserDto,
+    tokenPayload: TokenPayloadDto,
+  ): Promise<User> {
     const user = await this.findOne(id);
     const updated = Object.assign(user, updateUserDto);
     if (updateUserDto.password) {
       updated.password = await this.hashingService.hash(updateUserDto.password);
     }
+
+    if (!user) {
+      throw new NotFoundException('Pessoa não encontrada');
+    }
+
+    if (String(user.id) !== String(tokenPayload.sub)) {
+      throw new ForbiddenException('Você não é essa pessoa.');
+    }
     return this.userRepository.save(updated);
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: string, tokenPayload: TokenPayloadDto): Promise<void> {
     const user = await this.findOne(id);
+    if (String(user.id) !== String(tokenPayload.sub)) {
+      throw new ForbiddenException('Você não é essa pessoa.');
+    }
     await this.userRepository.remove(user);
   }
 }
