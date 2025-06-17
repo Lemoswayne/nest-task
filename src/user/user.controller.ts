@@ -25,6 +25,7 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
+  // Falta fazer isso com o os Boards e Tasks!!
   @UseGuards(AuthTokenGuard)
   @Get()
   findAll() {
