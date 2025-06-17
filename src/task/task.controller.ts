@@ -1,3 +1,4 @@
+// src/task/task.controller.ts
 import {
   Body,
   Controller,
@@ -7,18 +8,26 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskService } from './task.service';
+import { AuthTokenGuard } from 'src/auth/guards/auth-token.guard';
+import { TokenPayloadParam } from 'src/auth/params/token-payload.param';
+import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 
+@UseGuards(AuthTokenGuard)
 @Controller('tasks')
-// @UsePipes(ParseUUIDPipe)
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
   @Post()
-  create(@Body() createTaskDto: CreateTaskDto) {
-    return this.taskService.create(createTaskDto);
+  create(
+    @Body() createTaskDto: CreateTaskDto,
+    @TokenPayloadParam() tokenPayload: TokenPayloadDto,
+  ) {
+    return this.taskService.create(createTaskDto, tokenPayload);
   }
 
   @Get()
@@ -27,20 +36,27 @@ export class TaskController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.taskService.findOne(id);
+  findOne(
+    @Param('id', ParseUUIDPipe) id: string,
+    @TokenPayloadParam() tokenPayload: TokenPayloadDto,
+  ) {
+    return this.taskService.findOne(id, tokenPayload);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseUUIDPipe) id: string) {
-    return this.taskService.remove(id);
+  remove(
+    @Param('id', ParseUUIDPipe) id: string,
+    @TokenPayloadParam() tokenPayload: TokenPayloadDto,
+  ) {
+    return this.taskService.remove(id, tokenPayload);
   }
 
   @Patch(':id')
   update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() updateTaskDto: CreateTaskDto,
+    @Body() updateTaskDto: UpdateTaskDto,
+    @TokenPayloadParam() tokenPayload: TokenPayloadDto,
   ) {
-    return this.taskService.update(id, updateTaskDto);
+    return this.taskService.update(id, updateTaskDto, tokenPayload);
   }
 }
