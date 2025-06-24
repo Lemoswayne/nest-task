@@ -65,7 +65,100 @@ npm run start:prod
 
 ---
 
-## 🧪 Rodando Testes
+## 🚀 Como Utilizar a API
+
+Para interagir com os endpoints protegidos, você primeiro precisa se autenticar.
+
+### 1. Autenticação
+
+A API utiliza autenticação baseada em JWT (JSON Web Token). O fluxo é o seguinte:
+
+1.  **Crie um usuário**: Envie uma requisição `POST` para `/users`.
+2.  **Faça o login**: Envie uma requisição `POST` para `/auth` com o email e a senha do usuário criado.
+3.  **Receba o token**: A resposta conterá um `accessToken`.
+4.  **Use o token**: Para acessar rotas protegidas, inclua o token no cabeçalho `Authorization` de suas requisições, no formato `Bearer {seu_token}`.
+
+### 2. Endpoints
+
+#### 🧑‍💼 Auth
+
+- `POST /auth` - Realiza o login e retorna um `accessToken`.
+
+  **Exemplo de body:**
+
+  ```json
+  {
+    "email": "seu_email@example.com",
+    "password": "sua_senha"
+  }
+  ```
+
+#### 🧑‍💼 Users
+
+- `POST /users` — Criar um usuário.
+
+  **Exemplo de body:**
+
+  ```json
+  {
+    "name": "Seu Nome",
+    "email": "seu_email@example.com",
+    "password": "sua_senha_com_mais_de_6_caracteres"
+  }
+  ```
+
+- `GET /users` — Listar todos os usuários (Requer autenticação).
+- `GET /users/:id` — Buscar um usuário pelo ID (Requer autenticação).
+- `PATCH /users/:id` — Atualizar um usuário (Requer autenticação).
+- `DELETE /users/:id` — Deletar um usuário (Requer autenticação).
+
+#### 🗂️ Boards
+
+Todos os endpoints de Boards requerem autenticação.
+
+- `POST /boards` — Criar um board.
+
+  **Exemplo de body:**
+
+  ```json
+  {
+    "title": "Meu Novo Quadro",
+    "description": "Descrição do meu quadro.",
+    "userId": "uuid-do-usuario"
+  }
+  ```
+
+- `GET /boards` — Listar todos os boards.
+- `GET /boards/:id` — Buscar um board específico.
+- `PATCH /boards/:id` — Atualizar um board.
+- `DELETE /boards/:id` — Deletar um board.
+
+#### ✅ Tasks
+
+Todos os endpoints de Tasks requerem autenticação.
+
+- `POST /tasks` — Criar uma task.
+
+  **Exemplo de body:**
+
+  ```json
+  {
+    "title": "Minha Nova Tarefa",
+    "description": "Descrição da tarefa.",
+    "boardId": "uuid-do-board",
+    "status": "A fazer",
+    "order": 1
+  }
+  ```
+
+- `GET /tasks?boardId=uuid&page=1&limit=10` — Listar tasks com paginação.
+- `GET /tasks/:id` — Buscar uma task específica.
+- `PATCH /tasks/:id` — Atualizar uma task.
+- `DELETE /tasks/:id` — Deletar uma task.
+
+---
+
+## 🧪 Rodando Testes 🚧
 
 ```bash
 npm run test
@@ -73,7 +166,7 @@ npm run test
 
 ---
 
-## 🔗 Documentação Swagger
+## 🔗 Documentação Swagger 🚧
 
 Após rodar o projeto, acesse:
 
@@ -83,43 +176,17 @@ http://localhost:3000/api
 
 ---
 
-## 📜 Endpoints Principais
-
-### 🧑‍💼 Users
-
-- `POST /users` — Criar um usuário
-- `GET /users` — Listar todos os usuários
-- `GET /users/:id` — Buscar um usuário
-- `PATCH /users/:id` — Atualizar um usuário
-- `DELETE /users/:id` — Deletar um usuário (deleta também boards e tasks relacionados)
-
-### 🗂️ Boards
-
-- `POST /boards` — Criar um board
-- `GET /boards` — Listar todos os boards
-- `GET /boards/:id` — Buscar um board específico
-- `PATCH /boards/:id` — Atualizar um board
-- `DELETE /boards/:id` — Deletar um board (deleta também tasks relacionadas)
-
-### ✅ Tasks
-
-- `POST /tasks` — Criar uma task
-- `GET /tasks?boardId=uuid&page=1&limit=10` — Listar tasks com paginação
-- `GET /tasks/:id` — Buscar uma task específica
-- `PATCH /tasks/:id` — Atualizar uma task
-- `DELETE /tasks/:id` — Deletar uma task
-
----
-
 ## 📂 Estrutura de Pastas
 
 ```
 src
-├── app.module.ts
-├── common        # DTOs, filtros, interceptors, pipes
-├── board         # Módulo de boards
-├── task          # Módulo de tasks
-└── user          # Módulo de usuários
+├── app           # Configurações e módulo principal da aplicação
+├── auth          # Módulo de autenticação (guards, strategies, dtos)
+├── board         # Módulo de quadros (controller, service, entities, dtos)
+├── common        # Módulos comuns (pipes, interceptors, dtos)
+├── task          # Módulo de tarefas (controller, service, entities, dtos)
+├── user          # Módulo de usuários (controller, service, entities, dtos)
+└── main.ts       # Arquivo de inicialização da aplicação
 ```
 
 ---
@@ -135,17 +202,10 @@ src
 - 🚧 Paginação em Tasks
 - 🚧 Documentação Swagger
 - ✅ Suporte a UUID
-- 🚧 Autenticação e autorização com JWT
-
----
-
-## 💡 Melhorias Futuras
-
-- [ ] Implementar autenticação e autorização
-- [ ] Adicionar filtros avançados (status, prioridade, etc.)
-- [ ] Implementar os testes unitários e e2e
-- [ ] CI/CD com GitHub Actions
-- [ ] Deploy
+- ✅ Autenticação e autorização com JWT
+- 🚧 Upload de Arquivos com o Express Multer
+- 🚧 Testes unitários e e2e
+- 🚧 Deploy
 
 ---
 
