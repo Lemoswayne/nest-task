@@ -16,8 +16,10 @@ import { AuthTokenGuard } from 'src/auth/guards/auth-token.guard';
 import { TokenPayloadParam } from 'src/auth/params/token-payload.param';
 import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { ApiBearerAuth } from '@nestjs/swagger/dist/decorators/api-bearer.decorator';
 
 @UseGuards(AuthTokenGuard)
+@ApiBearerAuth()
 @Controller('tasks')
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
