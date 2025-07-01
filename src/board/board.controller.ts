@@ -31,8 +31,8 @@ export class BoardController {
   @UseGuards(AuthTokenGuard)
   @ApiBearerAuth()
   @Get()
-  findAll() {
-    return this.boardService.findAll();
+  findAll(@TokenPayloadParam() tokenPayload: TokenPayloadDto) {
+    return this.boardService.findAll(tokenPayload);
   }
 
   @UseGuards(AuthTokenGuard)

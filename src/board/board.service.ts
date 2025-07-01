@@ -34,8 +34,9 @@ export class BoardService {
     return this.boardRepository.save(board);
   }
 
-  async findAll(): Promise<Board[]> {
+  async findAll(tokenPayload: TokenPayloadDto): Promise<Board[]> {
     return this.boardRepository.find({
+      where: { user: { id: String(tokenPayload.sub) } },
       relations: ['tasks'],
     });
   }

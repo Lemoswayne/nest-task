@@ -7,6 +7,12 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Configurar CORS
+  app.enableCors({
+    origin: ['http://localhost:3001', 'http://localhost:3000'],
+    credentials: true,
+  });
+
   const config = new DocumentBuilder()
     .setTitle('Nest Task API')
     .setDescription('API para gerenciamento de usuários, quadros e tarefas')

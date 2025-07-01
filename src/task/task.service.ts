@@ -44,8 +44,9 @@ export class TaskService {
     return this.taskRepository.save(task);
   }
 
-  async findAll(): Promise<Task[]> {
+  async findAll(tokenPayload: TokenPayloadDto): Promise<Task[]> {
     return this.taskRepository.find({
+      where: { board: { user: { id: String(tokenPayload.sub) } } },
       relations: ['board'],
     });
   }
@@ -76,11 +77,18 @@ export class TaskService {
     return this.taskRepository.save(updated);
   }
 
-  async updateStatus(id: string, status: string): Promise<Task> {
-    const task = await this.taskRepository.findOne({ where: { id } });
+  async updateStatus(id: string, status: string, tokenPayload: TokenPayloadDto): Promise<Task> {
+    const task = await this.taskRepository.findOne({ 
+      where: { id },
+      relations: ['board', 'board.user']
+    });
 
     if (!task) {
       throw new NotFoundException(`Task with ID "${id}" not found`);
+    }
+
+    if (String(task.board.user.id) !== String(tokenPayload.sub)) {
+      throw new ForbiddenException('Você não tem permissão para atualizar esta tarefa.');
     }
 
     task.status = status;

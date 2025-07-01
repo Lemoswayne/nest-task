@@ -33,8 +33,8 @@ export class TaskController {
   }
 
   @Get()
-  findAll() {
-    return this.taskService.findAll();
+  findAll(@TokenPayloadParam() tokenPayload: TokenPayloadDto) {
+    return this.taskService.findAll(tokenPayload);
   }
 
   @Get(':id')
@@ -60,5 +60,14 @@ export class TaskController {
     @TokenPayloadParam() tokenPayload: TokenPayloadDto,
   ) {
     return this.taskService.update(id, updateTaskDto, tokenPayload);
+  }
+
+  @Patch(':id/status')
+  updateStatus(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() body: { status: string },
+    @TokenPayloadParam() tokenPayload: TokenPayloadDto,
+  ) {
+    return this.taskService.updateStatus(id, body.status, tokenPayload);
   }
 }
