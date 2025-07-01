@@ -200,7 +200,7 @@ src
 - ✅ Delete em cascata (quando deleta um usuário, apaga seus boards e tasks)
 - ✅ Validação de dados com class-validator
 - 🚧 Paginação em Tasks
-- 🚧 Documentação Swagger
+- ✅ Documentação Swagger
 - ✅ Suporte a UUID
 - ✅ Autenticação e autorização com JWT
 - 🚧 Upload de Arquivos com o Express Multer
